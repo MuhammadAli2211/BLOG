@@ -1,0 +1,253 @@
+/* ==========================================
+   Global Reset & Container Settings
+   ========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dashboard {
+  max-width: 1300px; /* Increased container width */
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* ==========================================
+   Header Section
+   ========================================== */
+.dashboard-header {
+  margin-bottom: 36px;
+  text-align: left;
+}
+
+.dashboard-header p {
+  color: #64748b;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================
+   Responsive Grid System
+   ========================================== */
+.posts-grid {
+  display: grid;
+  /* Min width 340px se barha kar 400px kar di hai for larger cards */
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+
+/* ==========================================
+   Post Card Styling
+   ========================================== */
+.post-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.25s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 30px -5px rgba(15, 23, 42, 0.1), 0 10px 12px -6px rgba(15, 23, 42, 0.04);
+  border-color: #cbd5e1;
+}
+
+/* Post Image Styling */
+.post-image {
+  width: 100%;
+  height: 280px; /* Height 210px se barha kar 280px kar di hai */
+  object-fit: cover;
+  background-color: #f1f5f9;
+  display: block;
+  border-bottom: 1px solid #f1f5f9;
+  transition: transform 0.35s ease;
+}
+
+.post-card:hover .post-image {
+  transform: scale(1.03);
+}
+
+/* ==========================================
+   Post Body & Content
+   ========================================== */
+.post-content {
+  padding: 26px; /* Padding barhayi hai */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-content h2 {
+  font-size: 1.4rem; /* Title size increased */
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-content p {
+  font-size: 1.02rem; /* Font size increased for description */
+  color: #475569;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Allow up to 4 lines */
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================
+   Post Footer & Author Controls
+   ========================================== */
+.post-footer {
+  padding: 18px 26px;
+  border-top: 1px solid #f1f5f9;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-image {
+  width: 46px; /* Profile avatar size enlarged */
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18);
+}
+
+.author-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.author-info span {
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ==========================================
+   Buttons & Interactive Actions
+   ========================================== */
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.like-btn,
+.comment-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px; /* Buttons padding increased */
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.like-btn:hover {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.comment-btn:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.like-btn:active,
+.comment-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* ==========================================
+   Empty State Block
+   ========================================== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 2px dashed #cbd5e1;
+  margin-top: 20px;
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ==========================================
+   Mobile Optimization
+   ========================================== */
+@media (max-width: 640px) {
+  .dashboard {
+    padding: 20px 16px;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .post-image {
+    height: 220px;
+  }
+
+  .post-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .post-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

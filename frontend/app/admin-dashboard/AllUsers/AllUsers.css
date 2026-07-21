@@ -1,0 +1,205 @@
+/* ==========================================
+   Admin Users Panel — Light Page & Dark Table
+   ========================================== */
+
+:root {
+  /* Light Modern Color Palette */
+  --admin-bg-light: #f8fafc;
+  --admin-border-light: #e2e8f0;
+  
+  --admin-text-main: #0f172a;
+  --admin-text-muted: #64748b;
+
+  --admin-accent-blue: #2563eb;
+  --admin-danger: #ef4444;
+  --admin-danger-hover: #dc2626;
+
+  /* Dark Table Theme Variables */
+  --table-dark-bg: #0f172a;          /* Slate 900 */
+  --table-dark-header: #1e293b;      /* Slate 800 */
+  --table-dark-border: #334155;      /* Slate 700 */
+  --table-dark-hover: #1e293b;
+  --table-text-bright: #f8fafc;
+  --table-text-muted: #94a3b8;
+
+  --radius-card: 16px;
+  --radius-btn: 8px;
+  --transition: all 0.2s ease-in-out;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Page Container (Remains Light) */
+.users-container {
+  font-family: var(--font-family);
+  max-width: 1280px;
+  min-height: calc(100vh - 64px);
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: var(--admin-text-main);
+  background-color: var(--admin-bg-light);
+}
+
+/* Section Title */
+.users-title {
+  text-align: left;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--admin-text-main);
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-title::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 24px;
+  background: var(--admin-accent-blue);
+  border-radius: 4px;
+}
+
+/* DARK Table Container Card */
+.table-wrapper {
+  overflow-x: auto;
+  background: var(--table-dark-bg);
+  border: 1px solid var(--table-dark-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+}
+
+/* Main Table Styling */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+/* DARK Table Headers */
+.users-table th {
+  background: var(--table-dark-header);
+  color: var(--table-text-muted);
+  padding: 16px 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--table-dark-border);
+  text-align: center;
+}
+
+/* DARK Table Cells */
+.users-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--table-dark-border);
+  color: var(--table-text-bright);
+  font-size: 0.925rem;
+  text-align: center;
+  vertical-align: middle;
+  transition: var(--transition);
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Row Hover State (Dark Theme) */
+.users-table tbody tr {
+  transition: var(--transition);
+}
+
+.users-table tbody tr:hover {
+  background: var(--table-dark-hover);
+}
+
+/* User Profile Image */
+.profile-cell {
+  text-align: center;
+}
+
+.profile-image {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--table-dark-border);
+  display: block;
+  margin: auto;
+  transition: var(--transition);
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  border-color: var(--admin-accent-blue);
+}
+
+.capitalize {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+/* Delete Action Button (Optimized for Dark Background) */
+.delete-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn:hover {
+  background: var(--admin-danger);
+  color: #ffffff;
+  border-color: var(--admin-danger);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.delete-btn:active {
+  transform: translateY(0);
+}
+
+/* Empty State */
+.no-users {
+  padding: 40px 20px;
+  color: var(--table-text-muted);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* Responsive Adaptations */
+@media (max-width: 768px) {
+  .users-container {
+    padding: 20px 14px;
+  }
+
+  .users-title {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+
+  .profile-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .delete-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}

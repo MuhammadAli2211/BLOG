@@ -1,0 +1,254 @@
+/* ==========================================
+   Global Reset & Dark Auth Theme Variables
+   ========================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Matching Login/Signup Dark Color Palette */
+  --nav-bg-dark: #070a12;
+  --nav-primary: #3b82f6;
+  --nav-primary-hover: #2563eb;
+  --nav-primary-glow: rgba(59, 130, 246, 0.3);
+  
+  --nav-text-main: #f8fafc;
+  --nav-text-muted: #94a3b8;
+  --nav-border: rgba(255, 255, 255, 0.12);
+  --nav-glass: rgba(7, 10, 18, 0.75);
+  
+  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.1);
+  --nav-transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ==========================================
+   Navbar Core (Dark Animated Mesh Gradient)
+   ========================================== */
+.navbar {
+  font-family: var(--nav-font);
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  
+  /* Animated Dark Mesh Background */
+  background-color: var(--nav-bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.22) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.2) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.15) 0px, transparent 50%);
+  background-size: 140% 140%;
+  animation: navMeshGradient 16s ease infinite alternate;
+  
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 1000;
+  gap: 16px;
+}
+
+@keyframes navMeshGradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* 1. LEFT ZONE: Logo */
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* 2. CENTER ZONE: Nav Links */
+.nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex: 2;
+  position: static;
+  transform: none;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--nav-text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--nav-transition);
+  padding: 6px 0;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffffff;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--nav-primary);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--nav-primary);
+  transition: var(--nav-transition);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* 3. RIGHT ZONE: Search & Logout Container */
+.search-form {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--nav-border);
+  border-radius: 20px;
+  padding: 2px 4px 2px 12px;
+  transition: var(--nav-transition);
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.search-form:focus-within {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--nav-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.search-input {
+  width: 150px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: var(--nav-text-main);
+  flex: 1;
+}
+
+.search-input::placeholder {
+  color: var(--nav-text-muted);
+}
+
+.search-btn {
+  height: 28px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 14px;
+  background: var(--nav-primary);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--nav-transition);
+  box-shadow: 0 2px 8px var(--nav-primary-glow);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn:hover {
+  background: var(--nav-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Cleaned & Fixed Compact Logout Button */
+.nav-logout-btn {
+  height: 32px !important;
+  padding: 0 14px !important;
+  margin-left: 8px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #f74d4d;
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.nav-logout-btn:hover {
+  background: #e43b3b;
+  color: #ffffff;
+  border-color: #e02e2e;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+  transform: translateY(-1px);
+}
+
+.nav-logout-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   Responsive Adaptations
+   ========================================== */
+
+/* Laptops / Smaller Screens */
+@media (max-width: 992px) {
+  .search-input {
+    width: 110px;
+  }
+  .nav-right {
+    gap: 16px;
+  }
+}
+
+/* Tablets & Mobile Screens */
+@media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    flex: none;
+  }
+
+  .nav-right {
+    order: 3;
+    width: 100%;
+    flex: 100%;
+    justify-content: center;
+    border-top: 1px solid var(--nav-border);
+    padding-top: 10px;
+    margin-top: 4px;
+  }
+
+  .search-form {
+    margin-left: auto;
+  }
+}

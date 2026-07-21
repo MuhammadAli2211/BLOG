@@ -1,0 +1,370 @@
+/* ==========================================
+   Global Reset & System Typography
+   ========================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #eef2ff;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.08) 0px, transparent 50%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* ==========================================
+   Page Layout Container
+   ========================================== */
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 580px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08), 
+              0 0 1px 1px rgba(226, 232, 240, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.12),
+              0 0 1px 1px rgba(191, 219, 254, 0.8);
+}
+
+.profile-card h1 {
+  text-align: center;
+  color: #1d4ed8;
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+/* ==========================================
+   Profile Avatar Box
+   ========================================== */
+.profile-image-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #2563eb;
+  padding: 3px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.3);
+}
+
+/* ==========================================
+   Total Likes Badge Box
+   ========================================== */
+.likes-box {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #1d4ed8;
+  padding: 14px 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  border: 1px solid #bfdbfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+}
+
+.likes-box span {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e40af;
+}
+
+/* ==========================================
+   Profile Photo Upload Area (Edit Mode)
+   ========================================== */
+.upload-section {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 24px;
+  border: 2px dashed #bfdbfe;
+  border-radius: 14px;
+  background: #f8fafc;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-box:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.upload-icon {
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+.upload-box p {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.upload-box span {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ==========================================
+   User Info Section & Form Controls
+   ========================================== */
+.user-info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.user-info input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  font-size: 0.98rem;
+  font-family: inherit;
+  color: #1e293b;
+  outline: none;
+  background-color: #f8fafc;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-info input:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* Info Cards for Viewing Mode */
+.info-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.info-card:hover {
+  border-color: #cbd5e1;
+}
+
+.info-card h4 {
+  color: #64748b;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.info-card p {
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: #0f172a;
+}
+
+/* ==========================================
+   Button Hierarchy & Actions
+   ========================================== */
+.upload-btn,
+.edit-btn,
+.save-btn,
+.cancel-btn,
+.logOut-btn {
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Primary Actions (Blue) */
+.upload-btn,
+.edit-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+  margin-top: 12px;
+}
+
+.upload-btn:hover,
+.edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+}
+
+/* Save Action (Green) */
+.save-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+  margin-top: 8px;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+}
+
+/* Cancel Action (Slate Gray) */
+.cancel-btn {
+  background: #ffffff;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+  margin-top: 10px;
+}
+
+.cancel-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+/* Logout Action (Red) */
+.logOut-btn {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1.5px solid #fecaca;
+  margin-top: 24px;
+}
+
+.logOut-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25);
+}
+
+.upload-btn:active,
+.edit-btn:active,
+.save-btn:active,
+.cancel-btn:active,
+.logOut-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   Loading State Styling
+   ========================================== */
+.loading {
+  text-align: center;
+  color: #2563eb;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 100px;
+}
+
+/* ==========================================
+   Responsive Breakpoints
+   ========================================== */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 30px 24px;
+  }
+
+  .profile-card h1 {
+    font-size: 1.8rem;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-page {
+    padding: 16px;
+  }
+
+  .profile-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .profile-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .profile-image {
+    width: 105px;
+    height: 105px;
+  }
+
+  .likes-box {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .upload-btn,
+  .edit-btn,
+  .save-btn,
+  .cancel-btn,
+  .logOut-btn {
+    font-size: 0.92rem;
+    padding: 13px;
+  }
+}

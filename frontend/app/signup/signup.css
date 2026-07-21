@@ -1,0 +1,269 @@
+/* ==========================================
+   Modern Auth Theme CSS (Signup Page)
+   ========================================== */
+
+:root {
+  /* Color Palette */
+  --bg-dark: #070a12;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(255, 255, 255, 0.65);
+  
+  --border-color: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --input-bg: #f8fafc;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  
+  --primary: #3b82f6;         /* Primary Accent */
+  --primary-hover: #2563eb;   /* Hover State */
+  --primary-active: #1d4ed8;
+  --primary-glow: rgba(59, 130, 246, 0.25);
+
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-text: #dc2626;
+
+  /* Typography & Effects */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius-card: 24px;
+  --radius-input: 12px;
+  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 1px 1px rgba(255, 255, 255, 0.2);
+  --shadow-input: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base resets */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   Dark Mesh Background & Animated Orbs
+   ========================================== */
+.auth-container {
+  font-family: var(--font-family);
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.28) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.18) 0px, transparent 50%);
+  background-size: 140% 140%;
+  animation: meshGradient 16s ease infinite alternate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+@keyframes meshGradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Glowing Background Orbs */
+.auth-container::before,
+.auth-container::after {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.auth-container::before {
+  top: 10%;
+  left: 15%;
+  background: rgba(37, 99, 235, 0.32);
+  animation: floatOrbOne 12s ease-in-out infinite alternate;
+}
+
+.auth-container::after {
+  bottom: 10%;
+  right: 15%;
+  background: rgba(14, 165, 233, 0.32);
+  animation: floatOrbTwo 14s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrbOne {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(50px, 40px, 0) scale(1.15); }
+}
+
+@keyframes floatOrbTwo {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-50px, -40px, 0) scale(1.15); }
+}
+
+/* ==========================================
+   Auth Card (Glassmorphism)
+   ========================================== */
+.auth-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 44px 36px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  letter-spacing: -0.03em;
+}
+
+/* ==========================================
+   Form Controls
+   ========================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-input);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: var(--transition);
+  outline: none;
+}
+
+.auth-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.auth-input:hover {
+  border-color: var(--border-hover);
+}
+
+.auth-input:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;
+  box-shadow: var(--shadow-input);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 6px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-input);
+  font-size: 0.98rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-active) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.4);
+}
+
+.auth-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Error Box */
+.auth-error {
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Links */
+.auth-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.auth-link a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.auth-link a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 16px;
+  }
+
+  .auth-card {
+    padding: 32px 22px;
+    border-radius: 20px;
+  }
+
+  .auth-title {
+    font-size: 1.5rem;
+    margin-bottom: 22px;
+  }
+
+  .auth-input,
+  .auth-button {
+    padding: 13px 14px;
+    font-size: 0.92rem;
+  }
+
+  .auth-container::before,
+  .auth-container::after {
+    width: 220px;
+    height: 220px;
+    filter: blur(65px);
+  }
+}

@@ -1,0 +1,288 @@
+/* ==========================================
+   Global Reset & System Typography
+   ========================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #eef2ff;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.08) 0px, transparent 50%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ==========================================
+   Page & Card Container
+   ========================================== */
+.edit-post-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.edit-post-card {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08), 
+              0 0 1px 1px rgba(226, 232, 240, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-post-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.12),
+              0 0 1px 1px rgba(191, 219, 254, 0.8);
+}
+
+.edit-post-card h1 {
+  color: #1d4ed8;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.edit-post-card p {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+  font-weight: 450;
+}
+
+/* ==========================================
+   Form Controls
+   ========================================== */
+.edit-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-post-form input[type="text"],
+.edit-post-form textarea {
+  width: 100%;
+  padding: 15px 18px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.98rem;
+  font-family: inherit;
+  color: #1e293b;
+  outline: none;
+  background-color: #f8fafc;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.edit-post-form input[type="text"]::placeholder,
+.edit-post-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+.edit-post-form textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+/* Field Active Focus Styling */
+.edit-post-form input[type="text"]:focus,
+.edit-post-form textarea:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* ==========================================
+   Existing / Selected Image Preview Frame
+   ========================================== */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  display: block;
+}
+
+/* ==========================================
+   Custom File Upload Input
+   ========================================== */
+.edit-post-form input[type="file"] {
+  width: 100%;
+  border: 2px dashed #bfdbfe;
+  border-radius: 12px;
+  padding: 18px;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.edit-post-form input[type="file"]:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1e293b;
+}
+
+.edit-post-form input[type="file"]::file-selector-button {
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  margin-right: 14px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.edit-post-form input[type="file"]::file-selector-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ==========================================
+   Button Group & Submit Action
+   ========================================== */
+.form-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.edit-post-form button[type="submit"],
+.btn-update {
+  width: 100%;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.28);
+}
+
+.edit-post-form button[type="submit"]:hover,
+.btn-update:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.38);
+}
+
+.edit-post-form button[type="submit"]:active,
+.btn-update:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.edit-post-form button[type="submit"]:disabled,
+.btn-update:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-cancel {
+  padding: 15px 26px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cancel:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* ==========================================
+   Responsive Breakpoints
+   ========================================== */
+@media (max-width: 768px) {
+  .edit-post-card {
+    padding: 30px 24px;
+  }
+
+  .edit-post-card h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-post-page {
+    padding: 16px;
+  }
+
+  .edit-post-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .edit-post-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .edit-post-form input[type="text"],
+  .edit-post-form textarea,
+  .edit-post-form button[type="submit"],
+  .btn-update,
+  .btn-cancel {
+    font-size: 0.92rem;
+  }
+
+  .preview-image {
+    max-height: 220px;
+  }
+
+  .edit-post-form input[type="file"]::file-selector-button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+}
