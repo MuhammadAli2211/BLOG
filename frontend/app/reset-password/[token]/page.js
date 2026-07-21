@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import API from "../../../lib/axios";
-import "./reset-password.css";
+import "..reset-password.css";
 
 export default function ResetPassword() {
   const router = useRouter();
