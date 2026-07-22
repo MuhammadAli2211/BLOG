@@ -199,9 +199,8 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    // ✅ FIX: Main production domain use karein (Bina git-main waale portion ke)
-    const clientUrl = process.env.CLIENT_URL || "https://blog-1j3t.vercel.app";
-    const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
+    const clientUrl = process.env.CLIENT_URL || "https://blog-eight-mauve-61.vercel.app";
+const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,
