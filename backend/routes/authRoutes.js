@@ -198,9 +198,8 @@ router.post("/forgot-password", async (req, res) => {
     user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
     await user.save();
-
-    const clientUrl = process.env.CLIENT_URL || "https://blog-eight-mauve-61.vercel.app";
-const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
+    
+const resetUrl = `https://blog-eight-mauve-61.vercel.app/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,
