@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create({
   baseURL:
     import.meta.env.VITE_API_URL ||
-    "https://blog-eight-mauve-61.vercel.app/api",
+    "https://blog-backend-bay-pi.vercel.app/api",
 });
 
 API.interceptors.request.use((config) => {
@@ -11,8 +11,6 @@ API.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = token;
-    // Agar backend Bearer expect karta hai to:
-    // config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
