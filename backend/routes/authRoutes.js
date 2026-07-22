@@ -199,8 +199,8 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    // Environment variable use karein, fallback me aapka Vercel URL
-    const clientUrl = process.env.CLIENT_URL || "https://blog-1j3t-git-main-muhammad-ali2211.vercel.app";
+    // ✅ FIX: Main production domain use karein (Bina git-main waale portion ke)
+    const clientUrl = process.env.CLIENT_URL || "https://blog-1j3t.vercel.app";
     const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
 
     await sendEmail(

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import API from "../../lib/axios";
 import "./dashboard.css";
 
 const BASE_URL = "http://localhost:5000";
 
-export default function UserDashboard() {
+function DashboardContent() {
   const [posts, setPosts] = useState([]);
 
   const searchParams = useSearchParams();
@@ -49,7 +49,6 @@ export default function UserDashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        
         <p>Explore all blog posts shared by the community</p>
       </div>
 
@@ -115,5 +114,13 @@ export default function UserDashboard() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function UserDashboard() {
+  return (
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import API from "../../lib/axios";
+import API from "@/lib/axios";
 import "./forget-password.css";
 
 export default function ForgotPassword() {
