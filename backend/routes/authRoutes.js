@@ -199,7 +199,9 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `"https://blog-peach-one-17.vercel.app"/reset-password/${resetCode}`;
+    // Correct (Quotes hata kar cleanest dynamic URL):
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+const resetUrl = `${frontendUrl}/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,

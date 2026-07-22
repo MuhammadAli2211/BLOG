@@ -47,7 +47,7 @@ export default function ResetPassword() {
     try {
       setLoading(true);
 
-      const res = await API.post(`/reset-password/${token}`, {
+      const res = await API.post(`/auth/reset-password/${token}`, {
         password,
       });
 
