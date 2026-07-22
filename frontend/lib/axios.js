@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_API_URL ||
-    "https://blog-backend-80ognybfj-muhammad-ali2211.vercel.app",
+    "https://blog-peach-one-17.vercel.app",
 });
 
 API.interceptors.request.use((config) => {

@@ -199,7 +199,7 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `https://blog-frontend-alpha-taupe.vercel.app/reset-password/${resetCode}`;
+    const resetUrl = `"https://blog-peach-one-17.vercel.app"/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,
