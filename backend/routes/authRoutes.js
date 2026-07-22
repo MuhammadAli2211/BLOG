@@ -199,7 +199,7 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const clientUrl = "https://blog-eight-mauve-61.vercel.app";
+    const clientUrl = process.env.CLIENT_URL || "https://blog-eight-mauve-61.vercel.app";
 const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
 
     await sendEmail(

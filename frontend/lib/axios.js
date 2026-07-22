@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  // ✅ LIVE BACKEND URL (Agar Vite env variable na mile toh fallback live backend use hoga)
+  baseURL: import.meta.env.VITE_API_URL || "https://blog-1j3t-git-main-muhammad-ali2211.vercel.app/api",
 });
 
 API.interceptors.request.use((config) => {
