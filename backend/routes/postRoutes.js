@@ -147,8 +147,10 @@ router.put("/:id", auth, upload.single("image"), async (req, res) => {
       });
     }
 
-    post.title = req.body.title;
-    post.description = req.body.description;
+    // post.title = req.body.title;//
+    // post.description = req.body.description;//
+    post.title = req.body.title || post.title;
+post.description = req.body.description || post.description;
 
     if (req.file) {
       post.image = `/uploads/${req.file.filename}`;
@@ -210,7 +212,7 @@ router.put("/like/:id", auth, async (req, res) => {
     for (let i = 0; i < post.likes.length; i++) {
       if (post.likes[i].toString() === req.user.id) {
         alreadyLiked = true;
-        break;
+        break;  
       }
     }
 

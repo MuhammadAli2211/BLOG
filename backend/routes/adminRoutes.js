@@ -74,7 +74,7 @@ router.get("/posts", auth, async (req, res) => {
       };
     }
 
-    const posts = await Post.find()
+    const posts = await Post.find(filter)
       .populate("user", "name email profile")
       .sort({ createdAt: -1 });
 

@@ -199,16 +199,18 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `http://localhost:3000/reset-password/${resetCode}`;
+    // Environment variable use karein, fallback me aapka Vercel URL
+    const clientUrl = process.env.CLIENT_URL || "https://blog-1j3t-git-main-muhammad-ali2211.vercel.app";
+    const resetUrl = `${clientUrl}/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,
       "Reset Password",
       `
         <h2>Reset Password</h2>
-        <p>Click the link below:</p>
-        <a href="${resetUrl}">Reset Password</a>
-        `
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetUrl}">${resetUrl}</a>
+      `
     );
 
     res.json({
@@ -221,6 +223,7 @@ router.post("/forgot-password", async (req, res) => {
     });
   }
 });
+
 // ================= Reset Password =================
 router.post("/reset-password/:token", async (req, res) => {
   try {

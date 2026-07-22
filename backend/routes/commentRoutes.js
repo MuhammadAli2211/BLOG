@@ -30,6 +30,8 @@ router.post("/:postId", auth, async (req, res) => {
       post: req.params.postId,
     });
 
+    newComment = await newComment.populate("user", "name profile");
+
     res.status(201).json({
       message: "Comment added successfully",
       comment: newComment,
