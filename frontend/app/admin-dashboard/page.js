@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import API from "../../lib/axios";
 import { useSearchParams } from "next/navigation";
 import "./admin-dashboard.css";
 
-export default function AdminDashboard() {
+function AdminDashboardContent() {
   const [posts, setPosts] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
@@ -158,5 +158,13 @@ export default function AdminDashboard() {
         </div>
       ))}
     </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdminDashboardContent />
+    </Suspense>
   );
 }
