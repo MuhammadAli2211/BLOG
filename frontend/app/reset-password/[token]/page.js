@@ -8,13 +8,26 @@ import "../reset-password.css";
 
 export default function ResetPassword() {
   const router = useRouter();
-  const { token } = useParams();
+  const params = useParams();
+
+  // ✅ Extract token safely from Next.js route params
+  const token =
+    params?.token ||
+    params?.resetCode ||
+    params?.id ||
+    (Array.isArray(params) ? params[0] : "");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleReset(e) {
     e.preventDefault();
+
+    if (!token) {
+      alert("Invalid or missing reset token. Please request a new reset link.");
+      return;
+    }
 
     if (!password || !confirmPassword) {
       alert("All fields are required");
@@ -32,15 +45,18 @@ export default function ResetPassword() {
     }
 
     try {
+      setLoading(true);
+
       const res = await API.post(`/reset-password/${token}`, {
         password,
       });
 
-      alert(res.data.message);
-
+      alert(res.data.message || "Password reset successful!");
       router.push("/login");
     } catch (err) {
       alert(err.response?.data?.message || "Password Reset Failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -64,7 +80,9 @@ export default function ResetPassword() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          <button type="submit">Reset Password</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Resetting..." : "Reset Password"}
+          </button>
         </form>
 
         <div className="link">
