@@ -7,10 +7,14 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  // ✅ Check window to prevent Server-Side Rendering (SSR) crash
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
 
-  if (token) {
-    config.headers.Authorization = token;
+    if (token) {
+      // ✅ Correct JWT Authorization format
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
 
   return config;
