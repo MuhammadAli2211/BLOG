@@ -1,109 +1,94 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import API from "../../../lib/axios";
 import "./my-post.css";
 
-const BASE_URL = "http://localhost:5000";
-
 export default function MyPosts() {
-  const router = useRouter();
-
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     getMyPosts();
   }, []);
 
+  // Dynamic Image URL Helper (Cloudinary vs Environment Fallback)
+  const getImageUrl = (imagePath, placeholder = "https://via.placeholder.com/150") => {
+    if (!imagePath) return placeholder;
+    if (imagePath.startsWith("http")) return imagePath; // Cloudinary URL
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    return `${baseUrl}${imagePath}`; // Local/Dynamic legacy fallback
+  };
+
   async function getMyPosts() {
     try {
       const res = await API.get("/posts/my-posts");
       setPosts(res.data);
     } catch (err) {
-      console.log(err);
+      alert(err.response?.data?.message || "Error fetching posts");
     }
   }
 
-  async function deletePost(id) {
-    const confirmDelete = confirm("Are you sure?");
-
-    if (!confirmDelete) return;
+  async function handleDelete(id) {
+    if (!confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      const res = await API.delete(`/posts/${id}`);
-
-      alert(res.data.message);
-
-      getMyPosts();
+      await API.delete(`/posts/${id}`);
+      setPosts(posts.filter((post) => post._id !== id));
+      alert("Post deleted successfully");
     } catch (err) {
-      alert(err.response?.data?.message || "Delete Failed");
+      alert(err.response?.data?.message || "Error deleting post");
     }
   }
 
   return (
     <div className="my-posts-page">
-      <h1 className="page-title">My Posts</h1>
+      <h1>My Posts</h1>
 
       {posts.length === 0 ? (
-        <h2 className="no-posts">No Posts Found</h2>
+        <div className="empty-state">
+          <h3>No Posts Created Yet</h3>
+        </div>
       ) : (
-        posts.map((post) => (
-          <div className="post-card" key={post._id}>
-            <div className="user-info">
-              <img
-                src={
-                  post.user?.profile
-                    ? `${BASE_URL}${post.user.profile}`
-                    : "https://via.placeholder.com/60"
-                }
-                alt="Profile"
-                className="profile-image"
-              />
+        <div className="posts-grid">
+          {posts.map((post) => (
+            <div key={post._id} className="post-card">
+              {post.image && (
+                <img
+                  src={getImageUrl(post.image)}
+                  alt={post.title || "Post"}
+                  className="post-image"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
 
-              <p>{post.user?.name || "Unknown"}</p>
+              <div className="post-content">
+                <h2>{post.title}</h2>
+                <p>{post.description}</p>
+              </div>
+
+              <div className="post-actions">
+                <Link
+                  href={`/user-dashboard/edit/${post._id}`}
+                  className="edit-btn"
+                >
+                  Edit Post
+                </Link>
+
+                <button
+                  type="button"
+                  className="delete-btn"
+                  onClick={() => handleDelete(post._id)}
+                >
+                  Delete Post
+                </button>
+              </div>
             </div>
-
-            {post.image && (
-              <img
-                src={`${BASE_URL}${post.image}`}
-                alt="Post"
-                className="post-image"
-              />
-            )}
-
-            <h2>{post.title}</h2>
-
-            <p className="description">{post.description}</p>
-
-            <div className="button-group">
-              <button
-                className="edit-btn"
-                onClick={() =>
-                  router.push(`/user-dashboard/edit/${post._id}`)
-                }
-              >
-                Edit
-              </button>
-
-              <button
-                className="delete-btn"
-                onClick={() => deletePost(post._id)}
-              >
-                Delete
-              </button>
-
-              <button
-                className="comment-btn"
-                onClick={() =>
-                  router.push(`/user-dashboard/comments/${post._id}`)
-                }
-              >
-                Comments
-              </button>
-            </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

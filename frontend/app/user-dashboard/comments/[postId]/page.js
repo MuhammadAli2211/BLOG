@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import API from "../../../../lib/axios";
-import "../comments.css"; 
+import "../comments.css";
 
 export default function CommentsPage() {
   const { postId } = useParams();
@@ -81,6 +81,15 @@ export default function CommentsPage() {
     }
   }
 
+  // Cloudinary / Environment Dynamic Image URL Formatter
+  const getProfileUrl = (profilePath) => {
+    if (!profilePath) return null;
+    if (profilePath.startsWith("http")) return profilePath; // Cloudinary URL
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    return `${baseUrl}${profilePath}`; // Dynamic Fallback
+  };
+
   return (
     <div className="comments-container">
       <h1 className="comments-title">Comments</h1>
@@ -109,23 +118,48 @@ export default function CommentsPage() {
       <hr className="comments-divider" />
 
       {comments.length === 0 ? (
-        <div className="empty-comments">No comments yet. Be the first to start the conversation!</div>
+        <div className="empty-comments">
+          No comments yet. Be the first to start the conversation!
+        </div>
       ) : (
         <div className="comments-list">
           {comments.map((item) => {
             const userName = item.user?.name || "Anonymous";
             const userInitial = userName.charAt(0).toUpperCase();
+            const profileImage = getProfileUrl(item.user?.profile);
+
+            // Safe ID check for current user comparison
+            const currentUserId = user?._id || user?.id;
+            const commentUserId = item.user?._id || item.user;
+            const isOwner = user && currentUserId === commentUserId;
 
             return (
               <div key={item._id} className="comment-card">
                 <div className="comment-header">
-                  <div className="comment-avatar">{userInitial}</div>
+                  {profileImage ? (
+                    <img
+                      src={profileImage}
+                      alt={userName}
+                      className="comment-avatar-img"
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <div className="comment-avatar">{userInitial}</div>
+                  )}
                   <h4 className="comment-author">{userName}</h4>
                 </div>
 
                 <p className="comment-text">{item.comment}</p>
 
-                {user && item.user?._id === user.id && (
+                {isOwner && (
                   <div className="comment-actions">
                     <button
                       type="button"

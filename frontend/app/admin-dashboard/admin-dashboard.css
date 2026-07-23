@@ -23,7 +23,7 @@
   --radius-card: 16px;
   --radius-btn: 8px;
   --radius-input: 10px;
-  --transition: all 0.2s ease-in-out;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -138,7 +138,7 @@
   color: var(--admin-text-main);
   background: #ffffff;
   outline: none;
-  box-sizing: border-box; /* Fixed typo: border-border-box -> border-box */
+  box-sizing: border-box;
   transition: var(--transition);
 }
 
@@ -154,19 +154,27 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-/* Action Button Group */
+/* ==========================================
+   OPTIMIZED BUTTON GROUP & BUTTONS (1 SEEDH)
+   ========================================== */
+
 .admin-dashboard .button-group {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
-  gap: 10px !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  margin-top: 12px !important;
+  width: 100% !important;
 }
 
+/* Shared Base Button Styling */
 .admin-dashboard .edit-btn,
 .admin-dashboard .save-btn,
 .admin-dashboard .cancel-btn,
 .admin-dashboard .delete-btn {
-  height: 38px !important;
-  padding: 0 18px !important;
+  height: 40px !important;
+  padding: 0 20px !important;
   border-radius: var(--radius-btn) !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
@@ -178,41 +186,45 @@
   justify-content: center !important;
   box-sizing: border-box !important;
   white-space: nowrap !important;
+  outline: none !important;
+  user-select: none !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
 }
 
 /* Edit Button */
 .admin-dashboard .edit-btn {
-  background-color: #dbeafe !important;
-  color: #1e40af !important;
-  border: 1px solid #93c5fd !important;
+  background-color: #eff6ff !important;
+  color: var(--admin-accent-blue) !important;
+  border: 1px solid #bfdbfe !important;
 }
 
 .admin-dashboard .edit-btn:hover {
   background-color: var(--admin-accent-blue) !important;
   color: #ffffff !important;
   border-color: var(--admin-accent-blue) !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
 }
 
 /* Save Button */
 .admin-dashboard .save-btn {
-  background-color: #dcfce7 !important;
-  color: #166534 !important;
-  border: 1px solid #86efac !important;
+  background-color: #f0fdf4 !important;
+  color: var(--admin-success) !important;
+  border: 1px solid #bbf7d0 !important;
 }
 
 .admin-dashboard .save-btn:hover {
   background-color: var(--admin-success) !important;
   color: #ffffff !important;
   border-color: var(--admin-success) !important;
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25) !important;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2) !important;
 }
 
 /* Cancel Button */
 .admin-dashboard .cancel-btn {
-  background-color: #e2e8f0 !important;
-  color: #334155 !important;
-  border: 1px solid #cbd5e1 !important;
+  background-color: #f8fafc !important;
+  color: var(--admin-text-muted) !important;
+  border: 1px solid var(--admin-border-light) !important;
 }
 
 .admin-dashboard .cancel-btn:hover {
@@ -223,20 +235,21 @@
 
 /* Delete Button */
 .admin-dashboard .delete-btn {
-  background-color: #fee2e2 !important;
-  color: #991b1b !important;
-  border: 1px solid #fca5a5 !important;
+  background-color: #fef2f2 !important;
+  color: var(--admin-danger) !important;
+  border: 1px solid #fecaca !important;
 }
 
 .admin-dashboard .delete-btn:hover {
   background-color: var(--admin-danger) !important;
   color: #ffffff !important;
   border-color: var(--admin-danger) !important;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) !important;
 }
 
+/* Active Click Effect */
 .admin-dashboard .button-group button:active {
-  transform: translateY(1px) !important;
+  transform: translateY(1px) scale(0.98) !important;
 }
 
 /* Mobile Responsiveness */
@@ -263,14 +276,16 @@
   }
 
   .admin-dashboard .button-group {
-    flex-direction: column !important;
-    gap: 8px !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    gap: 10px !important;
   }
 
   .admin-dashboard .edit-btn,
   .admin-dashboard .save-btn,
   .admin-dashboard .cancel-btn,
   .admin-dashboard .delete-btn {
-    width: 100% !important;
+    flex: 1 !important;
+    width: auto !important;
   }
 }

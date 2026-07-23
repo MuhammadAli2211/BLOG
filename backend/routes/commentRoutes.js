@@ -24,7 +24,7 @@ router.post("/:postId", auth, async (req, res) => {
       });
     }
 
-    const newComment = await Comment.create({
+    let newComment = await Comment.create({
       comment,
       user: req.user.id,
       post: req.params.postId,

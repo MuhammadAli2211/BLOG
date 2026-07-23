@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import API from "../../lib/axios";
 import "./dashboard.css";
 
-const BASE_URL = "http://localhost:5000";
-
 function DashboardContent() {
   const [posts, setPosts] = useState([]);
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || "";
@@ -17,32 +16,33 @@ function DashboardContent() {
     getPosts();
   }, [search]);
 
+  // Dynamic Image URL Helper (Cloudinary vs Environment Fallback)
+  const getImageUrl = (
+    imagePath,
+    placeholder = "https://via.placeholder.com/150"
+  ) => {
+    if (!imagePath) return placeholder;
+    if (imagePath.startsWith("http")) return imagePath; // Cloudinary URL
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    return `${baseUrl}${imagePath}`; // Legacy local uploads fallback
+  };
+
   async function getPosts() {
     try {
-      const res = await API.get(`/posts?search=${search}`);
+      const res = await API.get(`/posts?search=${encodeURIComponent(search)}`);
       setPosts(res.data);
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      alert(err.response?.data?.message || "Error fetching posts");
     }
   }
 
   async function handleLike(id) {
     try {
-      const token = localStorage.getItem("token");
-
-      await API.put(
-        `/posts/like/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
+      await API.put(`/posts/like/${id}`);
       getPosts();
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      alert(err.response?.data?.message || "Error liking post");
     }
   }
 
@@ -62,9 +62,12 @@ function DashboardContent() {
             <div key={post._id} className="post-card">
               {post.image && (
                 <img
-                  src={`${BASE_URL}${post.image}`}
-                  alt="Post"
+                  src={getImageUrl(post.image)}
+                  alt={post.title || "Post"}
                   className="post-image"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
                 />
               )}
 
@@ -76,13 +79,15 @@ function DashboardContent() {
               <div className="post-footer">
                 <div className="author-info">
                   <img
-                    src={
-                      post.user?.profile
-                        ? `${BASE_URL}${post.user.profile}`
-                        : "https://via.placeholder.com/60"
-                    }
+                    src={getImageUrl(
+                      post.user?.profile,
+                      "https://via.placeholder.com/60"
+                    )}
                     alt="Profile"
                     className="profile-image"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://via.placeholder.com/60";
+                    }}
                   />
 
                   <div>
@@ -93,6 +98,7 @@ function DashboardContent() {
 
                 <div className="post-actions">
                   <button
+                    type="button"
                     className="like-btn"
                     onClick={() => handleLike(post._id)}
                   >
@@ -100,9 +106,10 @@ function DashboardContent() {
                   </button>
 
                   <button
+                    type="button"
                     className="comment-btn"
                     onClick={() =>
-                      (window.location.href = `/user-dashboard/comments/${post._id}`)
+                      router.push(`/user-dashboard/comments/${post._id}`)
                     }
                   >
                     💬 Comments

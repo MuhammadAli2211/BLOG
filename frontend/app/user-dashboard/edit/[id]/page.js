@@ -5,8 +5,6 @@ import { useRouter, useParams } from "next/navigation";
 import API from "../../../../lib/axios";
 import "./edit.css";
 
-const BASE_URL = "http://localhost:5000";
-
 export default function EditPost() {
   const router = useRouter();
   const { id } = useParams();
@@ -15,10 +13,21 @@ export default function EditPost() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [oldImage, setOldImage] = useState("");
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [id]);
+
+  // Cleanup object URL when component unmounts or preview changes
+  useEffect(() => {
+    return () => {
+      if (preview) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
 
   async function getPost() {
     try {
@@ -32,8 +41,30 @@ export default function EditPost() {
     }
   }
 
+  // File Select and New Image Preview with memory cleanup
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (preview) {
+        URL.revokeObjectURL(preview);
+      }
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  // Safe Image URL Helper (Cloudinary vs Local Dynamic Fallback)
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+    if (imagePath.startsWith("http")) return imagePath; // Cloudinary URL
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    return `${baseUrl}${imagePath}`;
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -45,13 +76,19 @@ export default function EditPost() {
         formData.append("image", image);
       }
 
-      const res = await API.put(`/posts/${id}`, formData);
+      const res = await API.put(`/posts/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      alert(res.data.message);
+      alert(res.data?.message || "Post updated successfully!");
 
       router.push("/user-dashboard/my-posts");
     } catch (err) {
       alert(err.response?.data?.message || "Update Failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -78,21 +115,27 @@ export default function EditPost() {
             required
           />
 
-          {oldImage && (
+          {/* New Selected Image Preview OR Saved Old Image */}
+          {(preview || oldImage) && (
             <img
-              src={`${BASE_URL}${oldImage}`}
-              alt="Post"
+              src={preview || getImageUrl(oldImage)}
+              alt="Post Preview"
               className="preview-image"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
           )}
 
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={handleFileChange}
           />
 
-          <button type="submit">Update Post</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Updating..." : "Update Post"}
+          </button>
         </form>
       </div>
     </div>

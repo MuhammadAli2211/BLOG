@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const sendEmail = require("../emails/sendEmail");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
-const upload = require("../middleware/upload");
+const upload = require("../middleware/upload"); // Cloudinary wala upload middleware
 
 // ================= Signup =================
 router.post("/signup", async (req, res) => {
@@ -15,7 +15,6 @@ router.post("/signup", async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -42,7 +41,7 @@ router.post("/signup", async (req, res) => {
       email: email.toLowerCase().trim(),
       password: hashedPassword,
       verificationCode,
-      isVerified: false
+      isVerified: false,
     });
 
     await sendEmail(
@@ -52,7 +51,7 @@ router.post("/signup", async (req, res) => {
         <h2>Blog App</h2>
         <p>Your OTP Code:</p>
         <h1>${verificationCode}</h1>
-        `
+      `
     );
 
     res.status(201).json({
@@ -76,12 +75,10 @@ router.post("/verify", async (req, res) => {
       });
     }
 
-    const user = await User.findOne(
-      {
-        email: email.toLowerCase().trim(),
-        verificationCode: code,
-      }
-    );
+    const user = await User.findOne({
+      email: email.toLowerCase().trim(),
+      verificationCode: code,
+    });
 
     if (!user) {
       return res.status(400).json({
@@ -105,7 +102,6 @@ router.post("/verify", async (req, res) => {
 });
 
 // ================= Login =================
-
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -160,10 +156,9 @@ router.post("/login", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        profile: user.profile
+        profile: user.profile,
       },
     });
-
   } catch (err) {
     res.status(500).json({
       message: err.message,
@@ -199,9 +194,8 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    // Correct (Quotes hata kar cleanest dynamic URL):
-const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-const resetUrl = `${frontendUrl}/reset-password/${resetCode}`;
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const resetUrl = `${frontendUrl}/reset-password/${resetCode}`;
 
     await sendEmail(
       user.email,
@@ -216,7 +210,6 @@ const resetUrl = `${frontendUrl}/reset-password/${resetCode}`;
     res.json({
       message: "Reset password link sent successfully",
     });
-
   } catch (err) {
     res.status(500).json({
       message: err.message,
@@ -239,7 +232,6 @@ router.post("/reset-password/:token", async (req, res) => {
       resetPasswordToken: req.params.token,
       resetPasswordExpire: { $gt: Date.now() },
     });
-    console.log(user);
 
     if (!user) {
       return res.status(400).json({
@@ -256,7 +248,6 @@ router.post("/reset-password/:token", async (req, res) => {
     res.json({
       message: "Password Reset Successfully",
     });
-
   } catch (err) {
     res.status(500).json({
       message: err.message,
@@ -264,59 +255,43 @@ router.post("/reset-password/:token", async (req, res) => {
   }
 });
 
+// ================= Update Profile Picture =================
 router.put(
   "/profile",
   auth,
   upload.single("profile"),
   async (req, res) => {
-
     try {
-
       const user = await User.findById(req.user.id);
 
       if (!user) {
-
         return res.status(404).json({
-          message: "User not found"
+          message: "User not found",
         });
-
       }
 
       if (req.file) {
-
-        user.profile = "/uploads/" + req.file.filename;
-
+        // Cloudinary full URL direct store karein
+        user.profile = req.file.path;
       }
 
       await user.save();
 
       res.json({
-
         message: "Profile Updated Successfully",
-
-        user
-
+        user,
       });
-
-    }
-
-    catch (err) {
-
+    } catch (err) {
       res.status(500).json({
-
-        message: err.message
-
+        message: err.message,
       });
-
     }
+  }
+);
 
-  });
-
-
-
+// ================= Update Profile Details =================
 router.put("/update-profile", auth, async (req, res) => {
   try {
-
     const { name, email, password } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -338,6 +313,7 @@ router.put("/update-profile", auth, async (req, res) => {
         message: "Email already exists",
       });
     }
+
     user.name = name.trim();
     user.email = email.toLowerCase().trim();
 
@@ -357,13 +333,10 @@ router.put("/update-profile", auth, async (req, res) => {
         profile: user.profile,
       },
     });
-
   } catch (err) {
-
     res.status(500).json({
       message: err.message,
     });
-
   }
 });
 
